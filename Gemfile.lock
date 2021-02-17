@@ -19,13 +19,20 @@ GEM
     crack (0.4.5)
       rexml
     hashdiff (1.0.1)
+    httparty (0.18.1)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
     method_source (1.0.0)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2021.0212)
     minitest (5.14.3)
     minitest-focus (1.2.1)
       minitest (>= 4, < 6)
     mocha (1.12.0)
+    multi_xml (0.6.0)
     pry (0.14.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -45,6 +52,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  httparty
   minitest (~> 5.0)
   minitest-focus
   mocha
