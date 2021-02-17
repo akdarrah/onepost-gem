@@ -6,16 +6,39 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
+    coderay (1.1.3)
+    crack (0.4.5)
+      rexml
+    hashdiff (1.0.1)
+    method_source (1.0.0)
     minitest (5.14.3)
+    minitest-focus (1.2.1)
+      minitest (>= 4, < 6)
+    mocha (1.12.0)
+    pry (0.14.0)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    public_suffix (4.0.6)
     rake (12.3.3)
+    rexml (3.2.4)
+    webmock (3.11.2)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   minitest (~> 5.0)
+  minitest-focus
+  mocha
   onepost!
+  pry
   rake (~> 12.0)
+  webmock
 
 BUNDLED WITH
    2.1.4
