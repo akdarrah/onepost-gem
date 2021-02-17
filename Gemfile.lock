@@ -6,12 +6,21 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (6.1.3)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     coderay (1.1.3)
+    concurrent-ruby (1.1.8)
     crack (0.4.5)
       rexml
     hashdiff (1.0.1)
+    i18n (1.8.9)
+      concurrent-ruby (~> 1.0)
     method_source (1.0.0)
     minitest (5.14.3)
     minitest-focus (1.2.1)
@@ -23,15 +32,19 @@ GEM
     public_suffix (4.0.6)
     rake (12.3.3)
     rexml (3.2.4)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
     webmock (3.11.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   minitest (~> 5.0)
   minitest-focus
   mocha
