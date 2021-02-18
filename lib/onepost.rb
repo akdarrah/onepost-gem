@@ -8,5 +8,6 @@ require 'onepost/authorization'
 require 'onepost/authorized_page'
 require 'onepost/post'
 require 'onepost/social_post'
+require 'onepost/event'
 
 require "onepost/client"
