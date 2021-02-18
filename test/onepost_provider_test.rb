@@ -43,6 +43,23 @@ class OnepostProviderTest < Minitest::Test
     assert_equal 1, data["id"]
   end
 
+  def test_can_delete_a_provider
+    stub_request(:delete, "https://onepost1.p.rapidapi.com/api/v1/providers/1?secret_key=67890")
+      .with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      )
+      .to_return(status: 200, body: get_provider_data.to_json, headers: {})
+
+    data = @client.delete_provider(1)
+    assert_equal 1, data["id"]
+  end
+
   private
 
   def get_providers_data
