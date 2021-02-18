@@ -44,6 +44,33 @@ class OnepostPostTest < Minitest::Test
     assert_equal 1, data["id"]
   end
 
+  def test_can_create_a_new_post
+    stub_request(:post, "https://onepost1.p.rapidapi.com/api/v1/posts?secret_key=67890")
+      .with(
+        body: "{\"post\":{\"body\":\"I am the night\",\"authorized_page_ids\":[5],\"image_url\":\"https://fastly.syfy.com/sites/syfy/files/styles/1200x680/public/2017/12/screen_shot_2017-12-01_at_10.16.58_am.png\",\"publish_at\":\"2021-02-11T10:27:55-05:00\"}}",
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      ).to_return(status: 200, body: example_post_data.to_json, headers: {})
+
+    data = @client.create_post(
+      body: {
+        "post": {
+          "body": "I am the night",
+          "authorized_page_ids": [5],
+          "image_url": "https://fastly.syfy.com/sites/syfy/files/styles/1200x680/public/2017/12/screen_shot_2017-12-01_at_10.16.58_am.png",
+          "publish_at": "2021-02-11T10:27:55-05:00"
+        }
+      }
+    )
+    assert_equal 1, data["id"]
+  end
+
   private
 
   def example_posts_data
