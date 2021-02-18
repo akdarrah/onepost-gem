@@ -8,8 +8,6 @@ class OnepostProviderTest < Minitest::Test
     )
   end
 
-  # Onepost::Provider#get_providers
-
   def test_can_fetch_all_providers_data
     stub_request(:get, "https://onepost1.p.rapidapi.com/api/v1/providers?secret_key=67890")
       .with(
