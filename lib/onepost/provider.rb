@@ -11,7 +11,7 @@ module Onepost
 
         response = HTTParty.get(url, {
           query: query,
-          body: body,
+          body: body.to_json,
           headers: headers,
           timeout: Onepost::Client::TIMEOUT
         })
@@ -27,7 +27,7 @@ module Onepost
 
         response = HTTParty.get(url, {
           query: query,
-          body: body,
+          body: body.to_json,
           headers: headers,
           timeout: Onepost::Client::TIMEOUT
         })
@@ -51,20 +51,15 @@ module Onepost
         JSON.parse(response.body)
       end
 
-      def update_provider(id, params, options={})
-        data = {}
-        params.each do |name, value|
-          data["provider[#{name}]"] = value
-        end
-
+      def update_provider(id, options={})
         url     = construct_url("api/v1/providers/#{id}")
         query   = default_query.merge(options.fetch(:query, {}))
-        body    = URI.encode_www_form(data)
+        body    = default_body.merge(options.fetch(:body, {}))
         headers = default_headers.merge(options.fetch(:headers, {}))
 
         response = HTTParty.put(url, {
           query: query,
-          body: body,
+          body: body.to_json,
           headers: headers,
           timeout: Onepost::Client::TIMEOUT
         })
@@ -80,7 +75,7 @@ module Onepost
 
         response = HTTParty.delete(url, {
           query: query,
-          body: body,
+          body: body.to_json,
           headers: headers,
           timeout: Onepost::Client::TIMEOUT
         })
