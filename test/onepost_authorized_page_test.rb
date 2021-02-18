@@ -26,6 +26,24 @@ class OnepostAuthorizedPageTest < Minitest::Test
     assert_equal 3, data["collection"].count
   end
 
+  def test_can_fetch_an_authorized_page
+    stub_request(:get, "https://onepost1.p.rapidapi.com/api/v1/authorized_pages/2?secret_key=67890")
+      .with(
+        body: "{}",
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      ).to_return(status: 200, body: example_authorized_page_data.to_json, headers: {})
+
+    data = @client.get_authorized_page(2)
+    assert_equal 2, data["id"]
+  end
+
   private
 
   def example_authorized_pages_data
@@ -70,6 +88,14 @@ class OnepostAuthorizedPageTest < Minitest::Test
 
   def example_authorized_page_data
     {
+      "id"=>2,
+      "authorization_id"=>2,
+      "name"=>"Opendate",
+      "service_id"=>"115546706803453",
+      "type"=>"AuthorizedPages::Facebook",
+      "info"=>{},
+      "created_at"=>"2021-02-12T13:18:48.236-05:00",
+      "updated_at"=>"2021-02-12T13:18:48.236-05:00"
     }
   end
 end
