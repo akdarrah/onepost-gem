@@ -1,7 +1,9 @@
 module Onepost
-  RAPID_API_HOST = "onepost1.p.rapidapi.com"
-
   class Client
+    include Onepost::Provider
+
+    RAPID_API_HOST = "onepost1.p.rapidapi.com"
+
     attr_accessor :rapid_api_key, :secret_key
 
     def initialize(data={})
