@@ -46,10 +46,11 @@ class OnepostProviderTest < Minitest::Test
   def test_can_create_a_provider
     stub_request(:post, "https://onepost1.p.rapidapi.com/api/v1/providers?secret_key=67890")
       .with(
-        body: "provider%5Btype%5D=Providers%3A%3ATwitter&provider%5Bapi_key%5D=edw...&provider%5Bapi_secret_key%5D=XVI...&provider%5Bcallback_url%5D=http%3A%2F%2Fgoogle.com",
+        body: "{\"provider\":{\"type\":\"Providers::Twitter\",\"api_key\":\"edw...\",\"api_secret_key\":\"XVI...\",\"callback_url\":\"http://google.com\"}}",
         headers: {
           'Accept'=>'*/*',
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
           'User-Agent'=>'Ruby',
           'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
           'X-Rapidapi-Key'=>'12345'
@@ -58,10 +59,14 @@ class OnepostProviderTest < Minitest::Test
       .to_return(status: 200, body: example_provider_data.to_json, headers: {})
 
     data = @client.create_provider(
-      type: "Providers::Twitter",
-      api_key: "edw...",
-      api_secret_key: "XVI...",
-      callback_url: "http://google.com"
+      body: {
+        "provider": {
+          "type": "Providers::Twitter",
+          "api_key": "edw...",
+          "api_secret_key": "XVI...",
+          "callback_url": "http://google.com"
+        }
+      }
     )
     assert_equal 1, data["id"]
   end

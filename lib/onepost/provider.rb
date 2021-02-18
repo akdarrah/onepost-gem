@@ -35,22 +35,15 @@ module Onepost
         JSON.parse(response.body)
       end
 
-      def create_provider(params, options={})
-        data = {
-          "provider[type]"           => params.fetch(:type),
-          "provider[api_key]"        => params.fetch(:api_key),
-          "provider[api_secret_key]" => params.fetch(:api_secret_key),
-          "provider[callback_url]"   => params.fetch(:callback_url, nil)
-        }
-
+      def create_provider(options={})
         url     = construct_url("api/v1/providers")
         query   = default_query.merge(options.fetch(:query, {}))
-        body    = URI.encode_www_form(data)
+        body    = default_body.merge(options.fetch(:body, {}))
         headers = default_headers.merge(options.fetch(:headers, {}))
 
         response = HTTParty.post(url, {
           query: query,
-          body: body,
+          body: body.to_json,
           headers: headers,
           timeout: Onepost::Client::TIMEOUT
         })
