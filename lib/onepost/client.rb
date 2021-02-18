@@ -26,6 +26,7 @@ module Onepost
 
     def default_headers
       {
+        "Content-Type"    => "application/json",
         "x-rapidapi-key"  => rapid_api_key,
         "x-rapidapi-host" => Onepost::Client::RAPID_API_HOST
       }
