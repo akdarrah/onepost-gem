@@ -5,6 +5,7 @@ module Onepost
     include Onepost::AuthorizedPage
     include Onepost::Post
     include Onepost::SocialPost
+    include Onepost::Webhook
     include Onepost::Event
 
     RAPID_API_HOST = "onepost1.p.rapidapi.com"
