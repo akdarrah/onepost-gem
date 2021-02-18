@@ -4,13 +4,17 @@ class OnepostClientTest < Minitest::Test
   def setup
     @rapid_api_key = "12345"
     @secret_key = "67890"
-  end
 
-  def test_a_client_can_be_initialized
-    @client = Onepost::Client.new(
+    @data = {
       rapid_api_key: @rapid_api_key,
       secret_key: @secret_key
-    )
+    }
+  end
+
+  # Onepost::Client#initialize
+
+  def test_a_client_can_be_initialized
+    @client = Onepost::Client.new(@data)
 
     assert_equal @rapid_api_key, @client.rapid_api_key
     assert_equal @secret_key, @client.secret_key
@@ -30,5 +34,14 @@ class OnepostClientTest < Minitest::Test
         rapid_api_key: @rapid_api_key
       )
     end
+  end
+
+  # Onepost::Client#construct_url
+
+  def test_constructs_a_valid_url
+    @client = Onepost::Client.new(@data)
+
+    assert_equal "https://onepost1.p.rapidapi.com/api/v1/providers",
+      @client.send(:construct_url, "api/v1/providers")
   end
 end
