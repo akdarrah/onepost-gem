@@ -1,6 +1,7 @@
 module Onepost
   class Client
     include Onepost::Provider
+    include Onepost::Authorization
 
     RAPID_API_HOST = "onepost1.p.rapidapi.com"
     TIMEOUT = 180

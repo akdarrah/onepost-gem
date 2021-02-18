@@ -3,4 +3,5 @@ require "httparty"
 
 require "onepost/version"
 require 'onepost/provider'
+require 'onepost/authorization'
 require "onepost/client"
