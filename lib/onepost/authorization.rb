@@ -34,6 +34,22 @@ module Onepost
 
         JSON.parse(response.body)
       end
+
+      def create_authorization(options={})
+        url     = construct_url("api/v1/authorizations")
+        query   = default_query.merge(options.fetch(:query, {}))
+        body    = default_body.merge(options.fetch(:body, {}))
+        headers = default_headers.merge(options.fetch(:headers, {}))
+
+        response = HTTParty.post(url, {
+          query: query,
+          body: body.to_json,
+          headers: headers,
+          timeout: Onepost::Client::TIMEOUT
+        })
+
+        JSON.parse(response.body)
+      end
     end
   end
 end
