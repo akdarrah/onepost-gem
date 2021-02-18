@@ -27,6 +27,25 @@ class OnepostWebhookTest < Minitest::Test
     assert_equal 1, data["collection"].count
   end
 
+  def test_can_fetch_a_single_webhook
+    stub_request(:get, "https://onepost1.p.rapidapi.com/api/v1/webhooks/2?secret_key=67890")
+      .with(
+        body: "{}",
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      )
+      .to_return(status: 200, body: example_webhook_data.to_json, headers: {})
+
+    data = @client.get_webhook(2)
+    assert_equal 2, data["id"]
+  end
+
   private
 
   def example_webhooks_data
@@ -46,5 +65,11 @@ class OnepostWebhookTest < Minitest::Test
   end
 
   def example_webhook_data
+    {
+      "id"=>2,
+      "endpoint_url"=>"https://webhook.site/3f338283-10b0-492a-a97e",
+      "created_at"=>"2021-02-16T17:46:58.911-05:00",
+      "updated_at"=>"2021-02-16T17:46:58.911-05:00"
+    }
   end
 end
