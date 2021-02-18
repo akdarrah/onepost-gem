@@ -4,6 +4,7 @@ module Onepost
     include Onepost::Authorization
     include Onepost::AuthorizedPage
     include Onepost::Post
+    include Onepost::SocialPost
 
     RAPID_API_HOST = "onepost1.p.rapidapi.com"
     TIMEOUT = 180
