@@ -71,6 +71,29 @@ class OnepostPostTest < Minitest::Test
     assert_equal 1, data["id"]
   end
 
+  def test_can_update_a_post
+    stub_request(:put, "https://onepost1.p.rapidapi.com/api/v1/posts/5?secret_key=67890")
+      .with(
+        body: "{\"post\":{\"body\":\"Batmannn\"}}",
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      )
+      .to_return(status: 200, body: example_post_data.to_json, headers: {})
+
+    data = @client.update_post(5, body: {
+      "post": {
+        "body": "Batmannn"
+      }
+    })
+    assert_equal 1, data["id"]
+  end
+
   private
 
   def example_posts_data
