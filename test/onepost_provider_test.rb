@@ -10,7 +10,7 @@ class OnepostProviderTest < Minitest::Test
 
   # Onepost::Provider#get_providers
 
-  def test_can_fetch_provider_data
+  def test_can_fetch_all_providers_data
     stub_request(:get, "https://onepost1.p.rapidapi.com/api/v1/providers?secret_key=67890")
       .with(
         headers: {
@@ -24,6 +24,23 @@ class OnepostProviderTest < Minitest::Test
 
     data = @client.get_providers
     assert_equal 2, data["collection"].count
+  end
+
+  def test_can_fetch_single_provider_data
+    stub_request(:get, "https://onepost1.p.rapidapi.com/api/v1/providers/1?secret_key=67890")
+      .with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      )
+      .to_return(status: 200, body: get_provider_data.to_json, headers: {})
+
+    data = @client.get_provider(1)
+    assert_equal 1, data["id"]
   end
 
   private
@@ -53,6 +70,18 @@ class OnepostProviderTest < Minitest::Test
           "api_secret_key"=>"XVI..."
         }
       ]
+    }
+  end
+
+  def get_provider_data
+    {
+      "id"=>1,
+      "type"=>"Providers::Facebook",
+      "api_key"=>"277...",
+      "created_at"=>"2021-02-12T11:21:34.171-05:00",
+      "updated_at"=>"2021-02-12T11:21:34.171-05:00",
+      "callback_url"=>"http://google.com",
+      "api_secret_key"=>"42d..."
     }
   end
 end
