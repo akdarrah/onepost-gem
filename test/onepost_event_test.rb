@@ -46,6 +46,25 @@ class OnepostEventTest < Minitest::Test
     assert_equal 1, data["id"]
   end
 
+  def test_can_create_a_test_event
+    stub_request(:post, "https://onepost1.p.rapidapi.com/api/v1/events/test?secret_key=67890")
+      .with(
+        body: "{}",
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      )
+      .to_return(status: 200, body: example_event_data.to_json, headers: {})
+
+    data = @client.create_test_event
+    assert_equal 1, data["id"]
+  end
+
   private
 
   def example_events_data
