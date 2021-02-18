@@ -20,7 +20,7 @@ class OnepostProviderTest < Minitest::Test
           'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
           'X-Rapidapi-Key'=>'12345'}
       )
-      .to_return(status: 200, body: get_providers_data.to_json, headers: {})
+      .to_return(status: 200, body: example_providers_data.to_json, headers: {})
 
     data = @client.get_providers
     assert_equal 2, data["collection"].count
@@ -37,7 +37,7 @@ class OnepostProviderTest < Minitest::Test
           'X-Rapidapi-Key'=>'12345'
         }
       )
-      .to_return(status: 200, body: get_provider_data.to_json, headers: {})
+      .to_return(status: 200, body: example_provider_data.to_json, headers: {})
 
     data = @client.get_provider(1)
     assert_equal 1, data["id"]
@@ -55,7 +55,7 @@ class OnepostProviderTest < Minitest::Test
           'X-Rapidapi-Key'=>'12345'
         }
       )
-      .to_return(status: 200, body: get_provider_data.to_json, headers: {})
+      .to_return(status: 200, body: example_provider_data.to_json, headers: {})
 
     data = @client.create_provider(
       type: "Providers::Twitter",
@@ -77,7 +77,7 @@ class OnepostProviderTest < Minitest::Test
           'X-Rapidapi-Key'=>'12345'
         }
       )
-      .to_return(status: 200, body: get_provider_data.to_json, headers: {})
+      .to_return(status: 200, body: example_provider_data.to_json, headers: {})
 
     data = @client.delete_provider(1)
     assert_equal 1, data["id"]
@@ -85,7 +85,7 @@ class OnepostProviderTest < Minitest::Test
 
   private
 
-  def get_providers_data
+  def example_providers_data
     {
       "current_page"=>1,
       "per_page"=>30,
@@ -113,7 +113,7 @@ class OnepostProviderTest < Minitest::Test
     }
   end
 
-  def get_provider_data
+  def example_provider_data
     {
       "id"=>1,
       "type"=>"Providers::Facebook",
