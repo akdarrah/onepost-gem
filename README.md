@@ -1,8 +1,14 @@
 # Onepost
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/onepost`. To experiment with that code, run `bin/console` for an interactive prompt.
+OnePost is social media management infrastructure for the internet. Companies use our API to create, post, and manage their social presence via programmatic communication. You can think of it like a headless Hootsuite built for developers.
 
-TODO: Delete this and the text above, and describe your gem
+Use OnePost to quickly integrate your application with Twitter, Facebook, and Instagram.
+
+1. Start by registering for the developer applications that you'll need for your application, such as Twitter and Facebook.
+2. Then, use OnePost to allow your application's users to log in to each service through their web browser, thereby giving your application permission to post on their behalf.
+3. Finally, post to one (or many) social pages owned by the user with a single API call. Use OnePost to track the performance of each post over time.
+
+Learn more at [https://www.getonepost.com/](https://www.getonepost.com/).
 
 ## Installation
 
