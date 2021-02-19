@@ -100,6 +100,44 @@ client.get_authorizations
 # => {"current_page"=>1, "per_page"=>30, "total_entries"=>1, "collection"=>[{"id"=>5, "created_at"=>"2021-02-19T10:18:36.384-05:00", "updated_at"=>"2021-02-19T10:18:36.384-05:00", "provider_id"=>5, "type"=>"Authorizations::Twitter", "consumer_key"=>"815...", "consumer_secret"=>"HLh...", "authorized_pages"=>[]}]}
 ```
 
+When an Authorization is created in OnePost, OnePost will automatically create `AuthorizedPage` records for the `Authorization` that represent social pages the user is allowed to post to. In the case of Twitter, this will be a single `AuthorizedPage`. Let's use the API to find our `AuthorizedPage` record:
+
+```ruby
+client.get_authorized_pages
+# => {"current_page"=>1, "per_page"=>30, "total_entries"=>1, "collection"=>[{"id"=>6, "authorization_id"=>5, "name"=>"1bertlol", "service_id"=>"81534513", "type"=>"AuthorizedPages::Twitter", "info"=>{...}]}
+```
+
+Now that we have an `AuthorizedPage` id, we are ready to create our first post!
+
+```ruby
+client.create_post(body: {
+  post: {
+    "body": "My first post using the OnePost Ruby Gem https://github.com/akdarrah/onepost-gem",
+    "authorized_page_ids": [6],
+    "image_url": "https://img1.looper.com/img/gallery/the-real-reason-futurama-was-canceled/intro-1567514049.jpg"
+  }
+})
+# => {"id"=>7, "body"=>"My first post using the OnePost Ruby Gem https://github.com/akdarrah/onepost-gem", "created_at"=>"2021-02-19T10:49:37.633-05:00", "updated_at"=>"2021-02-19T10:49:37.656-05:00", "state"=>"draft", "publish_at"=>nil, "authorized_page_ids"=>[6], "image_url"=>"https://onepost-aws-assets.s3.amazonaws.com/g5smw81h3oudjpri1sj66dp...", "social_posts"=>[{"id"=>7, "post_id"=>7, "created_at"=>"2021-02-19T10:49:37.642-05:00", "updated_at"=>"2021-02-19T10:49:37.642-05:00", "type"=>"SocialPosts::Twitter", "state"=>"unsent", "authorized_page_id"=>6}]}
+```
+
+Posts are created in a "draft" state and can be updated until it is published. Notice that a `SocialPost` record is automatically created for the AuthorizedPage you provided. As you alter the `authorized_page_ids`, these `SocialPost` records will be automatically created or destroyed for each page you are posting to.
+
+Additionally, you can use the `publish_at` field to specify a time for OnePost to automatically publish the post. Since we didn't schedule this post to be published automatically, let's publish it using the API:
+
+```ruby
+client.publish_post(7)
+# => {"id"=>7, "body"=>"My first post using the OnePost Ruby Gem https://github.com/akdarrah/onepost-gem", "created_at"=>"2021-02-19T10:49:37.633-05:00", "updated_at"=>"2021-02-19T10:56:23.977-05:00", "state"=>"publishing", "publish_at"=>nil, "authorized_page_ids"=>[6], "image_url"=>"https://onepost-aws-assets.s3.amazonaws.com/g5smw81h3oud...", "social_posts"=>[{"id"=>7, "post_id"=>7, "created_at"=>"2021-02-19T10:49:37.642-05:00", "updated_at"=>"2021-02-19T10:49:37.642-05:00", "type"=>"SocialPosts::Twitter", "state"=>"unsent", "authorized_page_id"=>6}]}
+```
+
+A few moments later, and you will see your published Tweet!
+
+Once published, OnePost will track the performance of your `SocialPost` over time. Simply get the SocialPost record to see the most up-to-date data available.
+
+```ruby
+client.get_social_post(7)
+# => {"id"=>7, "post_id"=>7, "created_at"=>"2021-02-19T10:49:37.642-05:00", "updated_at"=>"2021-02-19T10:56:24.019-05:00", "type"=>"SocialPosts::Twitter", "state"=>"sent", "authorized_page_id"=>6, "service_data"=>{"id"=>1362793165137313792, "geo"=>nil, "lang"=>"en", "text"=>"My first post using the OnePost Ruby Gem https://t.co/K0nlM9qLWx https://t.co/owC53ZJuDO", "user"=>{"id"=>81534513, "url"=>"https://t.co/23KYmkQZJB", "lang"=>nil, "name"=>"Adam Darrah", "id_str"=>"81534513", "entities"=>{"url"=>{"urls"=>[{"url"=>"https://t.co/23KYmkQZJB", "indices"=>[0, 23], "display_url"=>"dropkiq.com", "expanded_url"=>"https://www.dropkiq.com/"}]}, "description"=>{"urls"=>[]}}, "location"=>"Keystone, Indiana", "verified"=>false, "following"=>false, "protected"=>false, "time_zone"=>nil, "created_at"=>"Sun Oct 11 06:36:24 +0000 2009", "utc_offset"=>nil, "description"=>"I like futurama, websites, and code. Founder of Dropkiq 🥊", "geo_enabled"=>false, "screen_name"=>"1bertlol", "listed_count"=>4, "friends_count"=>266, "is_translator"=>false, "notifications"=>false, "statuses_count"=>1693, "default_profile"=>false, "followers_count"=>175, "translator_type"=>"none", "favourites_count"=>771, "profile_image_url"=>"http://pbs.twimg.com/profile_images/1266163001532518400/K41HOU0Y_normal.jpg", "profile_link_color"=>"0084B4", "profile_text_color"=>"333333", "follow_request_sent"=>false, "contributors_enabled"=>false, "has_extended_profile"=>false, "default_profile_image"=>false, "is_translation_enabled"=>false, "profile_background_tile"=>true, "profile_image_url_https"=>"https://pbs.twimg.com/profile_images/1266163001532518400/K41HOU0Y_normal.jpg", "profile_background_color"=>"C0DEED", "profile_sidebar_fill_color"=>"DDEEF6", "profile_background_image_url"=>"http://abs.twimg.com/images/themes/theme18/bg.gif", "profile_sidebar_border_color"=>"000000", "profile_use_background_image"=>true, "profile_background_image_url_https"=>"https://abs.twimg.com/images/themes/theme18/bg.gif"}, "place"=>nil, "id_str"=>"1362793165137313792", "source"=>"<a href=\"https://www.getonepost.com/\" rel=\"nofollow\">GetOnepost</a>", "entities"=>{"urls"=>[{"url"=>"https://t.co/K0nlM9qLWx", "indices"=>[41, 64], "display_url"=>"github.com/akdarrah/onepo…", "expanded_url"=>"https://github.com/akdarrah/onepost-gem"}], "media"=>[{"id"=>1362793163627384833, "url"=>"https://t.co/owC53ZJuDO", "type"=>"photo", "sizes"=>{"large"=>{"h"=>438, "w"=>780, "resize"=>"fit"}, "small"=>{"h"=>382, "w"=>680, "resize"=>"fit"}, "thumb"=>{"h"=>150, "w"=>150, "resize"=>"crop"}, "medium"=>{"h"=>438, "w"=>780, "resize"=>"fit"}}, "id_str"=>"1362793163627384833", "indices"=>[65, 88], "media_url"=>"http://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg", "display_url"=>"pic.twitter.com/owC53ZJuDO", "expanded_url"=>"https://twitter.com/1bertlol/status/1362793165137313792/photo/1", "media_url_https"=>"https://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg"}], "symbols"=>[], "hashtags"=>[], "user_mentions"=>[]}, "favorited"=>false, "retweeted"=>false, "truncated"=>false, "created_at"=>"Fri Feb 19 15:56:24 +0000 2021", "coordinates"=>nil, "contributors"=>nil, "retweet_count"=>0, "favorite_count"=>1, "is_quote_status"=>false, "extended_entities"=>{"media"=>[{"id"=>1362793163627384833, "url"=>"https://t.co/owC53ZJuDO", "type"=>"photo", "sizes"=>{"large"=>{"h"=>438, "w"=>780, "resize"=>"fit"}, "small"=>{"h"=>382, "w"=>680, "resize"=>"fit"}, "thumb"=>{"h"=>150, "w"=>150, "resize"=>"crop"}, "medium"=>{"h"=>438, "w"=>780, "resize"=>"fit"}}, "id_str"=>"1362793163627384833", "indices"=>[65, 88], "media_url"=>"http://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg", "display_url"=>"pic.twitter.com/owC53ZJuDO", "expanded_url"=>"https://twitter.com/1bertlol/status/1362793165137313792/photo/1", "media_url_https"=>"https://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg"}]}, "possibly_sensitive"=>false, "in_reply_to_user_id"=>nil, "in_reply_to_status_id"=>nil, "in_reply_to_screen_name"=>nil, "in_reply_to_user_id_str"=>nil, "in_reply_to_status_id_str"=>nil, "possibly_sensitive_appealable"=>false}, "service_data_updated_at"=>"2021-02-19T11:00:18.465-05:00"}
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
