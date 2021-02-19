@@ -32,7 +32,7 @@ Or install it yourself as:
 
 To use the OnePost Ruby Gem, you must first obtain the required credentials:
 
-1. Create a user account on [GetOnePost](https://api.getonepost.com/) to get your `secret_key`, which will be a required parameter for all requests.
+1. Create a user account on [OnePost](https://api.getonepost.com/) to get your `secret_key`, which will be a required parameter for all requests.
 2. OnePost uses the RapidAPI infrastructure to manage API requests. You will need to find your `X-RapidAPI-Key` value from [RapidAPI](https://rapidapi.com/onepost/api/onepost1).
 
 ### Create Developer Applications
