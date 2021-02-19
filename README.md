@@ -144,7 +144,7 @@ client.get_social_post(7)
 
 ### Webhooks
 
-You may have noticed while reading over the documentation that several key records are created for you automatically, such as `AuthorizedPage` records. This can be problematic in the event that you go to look for your records and they aren't created yet.
+You may have noticed while reading over the documentation that several key records are created for you automatically, such as `AuthorizedPage` records. This can be problematic in the event that you go to look for your records and they haven't been created yet.
 
 Luckily, OnePost solves this need by providing a Webhook system. This system allows you to specify an HTTP endpoint in your application for OnePost to send `POST` requests to. When key events happen in the OnePost system, the event data will be sent to your endpoint where your application can do the necessary processing without polling for updates.
 
