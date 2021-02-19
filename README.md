@@ -131,6 +131,8 @@ client.publish_post(7)
 
 A few moments later, and you will see your published Tweet!
 
+<img width="668" alt="published-tweet" src="https://user-images.githubusercontent.com/69064/108529332-5cac5b80-72a2-11eb-8166-9565d2d35f72.png">
+
 Once published, OnePost will track the performance of your `SocialPost` over time. Simply get the SocialPost record to see the most up-to-date data available.
 
 ```ruby
