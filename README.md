@@ -172,6 +172,14 @@ You should now see your test event appear in Webhook.site.
 
 OnePost will continue to attempt to send the request to notify your application of events using an exponential backoff algorithm in the case we receive a non-200 response.
 
+At the time of writing, OnePost has just a handful of events (check back later for more):
+
+Name | Description
+------------ | -------------
+events.test | Created manually by the API user to test Webhook endpoints are configured correctly
+authorized_page.created | Created automatically when a new AuthorizedPage is created (after an Authorization is created)
+social_post.updated | Created automatically for each SocialPost after a Post has been published. Listen for this event if you want to track performance (such as number of likes, retweets, etc).
+
 ### Reference
 
 For full documentation, please use the [OnePost RapidAPI Page](https://rapidapi.com/onepost/api/onepost1) as the ultimate source of truth. Additionally, the tests included in this gem are a great way to see what is possible using the Gem:
