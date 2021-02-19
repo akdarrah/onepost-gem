@@ -91,7 +91,7 @@ client.create_authorization(body: {authorization: {provider_id: 5}})
 # => {"instructions"=>["Perform the following steps to complete the authorization process:", "  1. In your web browser, navigate to the provided URL.", "  2. Sign in to Twitter.", "  3. You will be redirected back to the original application."], "url"=>"https://api.getonepost.com/users/auth/twitter?provider_id=5&public_key=pk-7a0..."}
 ```
 
-In your web browser, navigate to the `url` value. You will be prompted to log in to your Twitter account to give your Twitter Developer Application access to your Twitter account. Once you log in, you will be redirected back to the OnePost website. The URL to redirect the user after a successful authorization can be customized by the `callback_url` value on the Provider record.
+In your web browser, navigate to the `url` value. You will be prompted to log in to your Twitter account, which will give your Twitter Developer Application access. Once you log in, you will be redirected back to the OnePost website. The URL to redirect the user to after a successful authorization can be customized by the `callback_url` value on the Provider record.
 
 <img width="1000" alt="twitter-browser" src="https://user-images.githubusercontent.com/69064/108530520-aea1b100-72a3-11eb-94f8-123e9e256e44.png">
 
