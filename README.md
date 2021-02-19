@@ -28,7 +28,40 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Obtain Credentials
+
+To use the OnePost Ruby Gem, you must first obtain the required credentials:
+
+1. Create a user account on [https://api.getonepost.com/](https://api.getonepost.com/) to get your `secret_key`, which will be a required parameter for all requests.
+2. OnePost uses the RapidAPI infrastructure to manage API requests. You will need to find your `X-RapidAPI-Key` value from [RapidAPI](https://rapidapi.com/onepost/api/onepost1).
+
+### Create Developer Applications
+
+Now that you have the required credentials, the next step is to register a developer application with Providers you would like to integrate with, such as Twitter and Facebook. For the purpose of these instructions, we'll be using Twitter. Use the [Twitter Developer Portal](https://developer.twitter.com/en) to register a new Developer Application. Once you have created your developer application, take note of your `API key` and `API secret key`.
+
+### Using the OnePost Ruby Gem
+
+All interactions with the OnePost API is done using a `Onepost::Client` instance. You can create your instance by passing your credentials:
+
+```
+client = Onepost::Client.new(
+  secret_key: "sk-7a0...",
+  rapid_api_key: "9d0..."
+)
+```
+
+Once we have a `Onepost::Client` instance, let's use the instance to create a Provider record for our Twitter Developer Application. Provider records are used to store the `API key` and `API secret key` from any social provider, such as Twitter, Facebook, etc.
+
+```
+client.create_provider(body: {
+  provider: {
+    type: "Providers::Twitter",
+    api_key: "edw...",
+    api_secret_key: "XVI..."
+  }
+})
+# => {"id"=>5, "type"=>"Providers::Twitter", "api_key"=>"edw...", "created_at"=>"2021-02-19T10:04:23.692-05:00", "updated_at"=>"2021-02-19T10:04:23.692-05:00", "callback_url"=>nil, "api_secret_key"=>"XVI..."}
+```
 
 ## Development
 
