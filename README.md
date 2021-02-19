@@ -168,6 +168,8 @@ client.create_test_event
 
 You should now see your test event appear in Webhook.site.
 
+<img width="1275" alt="success" src="https://user-images.githubusercontent.com/69064/108535592-7dc47a80-72a9-11eb-8d21-17885442570e.png">
+
 OnePost will continue to attempt to send the request to notify your application of events using an exponential backoff algorithm in the case we receive a non-200 response.
 
 ### Reference
