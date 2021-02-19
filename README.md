@@ -142,7 +142,37 @@ client.get_social_post(7)
 # => {"id"=>7, "post_id"=>7, "created_at"=>"2021-02-19T10:49:37.642-05:00", "updated_at"=>"2021-02-19T10:56:24.019-05:00", "type"=>"SocialPosts::Twitter", "state"=>"sent", "authorized_page_id"=>6, "service_data"=>{"id"=>1362793165137313792, "geo"=>nil, "lang"=>"en", "text"=>"My first post using the OnePost Ruby Gem https://t.co/K0nlM9qLWx https://t.co/owC53ZJuDO", "user"=>{"id"=>81534513, "url"=>"https://t.co/23KYmkQZJB", "lang"=>nil, "name"=>"Adam Darrah", "id_str"=>"81534513", "entities"=>{"url"=>{"urls"=>[{"url"=>"https://t.co/23KYmkQZJB", "indices"=>[0, 23], "display_url"=>"dropkiq.com", "expanded_url"=>"https://www.dropkiq.com/"}]}, "description"=>{"urls"=>[]}}, "location"=>"Keystone, Indiana", "verified"=>false, "following"=>false, "protected"=>false, "time_zone"=>nil, "created_at"=>"Sun Oct 11 06:36:24 +0000 2009", "utc_offset"=>nil, "description"=>"I like futurama, websites, and code. Founder of Dropkiq 🥊", "geo_enabled"=>false, "screen_name"=>"1bertlol", "listed_count"=>4, "friends_count"=>266, "is_translator"=>false, "notifications"=>false, "statuses_count"=>1693, "default_profile"=>false, "followers_count"=>175, "translator_type"=>"none", "favourites_count"=>771, "profile_image_url"=>"http://pbs.twimg.com/profile_images/1266163001532518400/K41HOU0Y_normal.jpg", "profile_link_color"=>"0084B4", "profile_text_color"=>"333333", "follow_request_sent"=>false, "contributors_enabled"=>false, "has_extended_profile"=>false, "default_profile_image"=>false, "is_translation_enabled"=>false, "profile_background_tile"=>true, "profile_image_url_https"=>"https://pbs.twimg.com/profile_images/1266163001532518400/K41HOU0Y_normal.jpg", "profile_background_color"=>"C0DEED", "profile_sidebar_fill_color"=>"DDEEF6", "profile_background_image_url"=>"http://abs.twimg.com/images/themes/theme18/bg.gif", "profile_sidebar_border_color"=>"000000", "profile_use_background_image"=>true, "profile_background_image_url_https"=>"https://abs.twimg.com/images/themes/theme18/bg.gif"}, "place"=>nil, "id_str"=>"1362793165137313792", "source"=>"<a href=\"https://www.getonepost.com/\" rel=\"nofollow\">GetOnepost</a>", "entities"=>{"urls"=>[{"url"=>"https://t.co/K0nlM9qLWx", "indices"=>[41, 64], "display_url"=>"github.com/akdarrah/onepo…", "expanded_url"=>"https://github.com/akdarrah/onepost-gem"}], "media"=>[{"id"=>1362793163627384833, "url"=>"https://t.co/owC53ZJuDO", "type"=>"photo", "sizes"=>{"large"=>{"h"=>438, "w"=>780, "resize"=>"fit"}, "small"=>{"h"=>382, "w"=>680, "resize"=>"fit"}, "thumb"=>{"h"=>150, "w"=>150, "resize"=>"crop"}, "medium"=>{"h"=>438, "w"=>780, "resize"=>"fit"}}, "id_str"=>"1362793163627384833", "indices"=>[65, 88], "media_url"=>"http://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg", "display_url"=>"pic.twitter.com/owC53ZJuDO", "expanded_url"=>"https://twitter.com/1bertlol/status/1362793165137313792/photo/1", "media_url_https"=>"https://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg"}], "symbols"=>[], "hashtags"=>[], "user_mentions"=>[]}, "favorited"=>false, "retweeted"=>false, "truncated"=>false, "created_at"=>"Fri Feb 19 15:56:24 +0000 2021", "coordinates"=>nil, "contributors"=>nil, "retweet_count"=>0, "favorite_count"=>1, "is_quote_status"=>false, "extended_entities"=>{"media"=>[{"id"=>1362793163627384833, "url"=>"https://t.co/owC53ZJuDO", "type"=>"photo", "sizes"=>{"large"=>{"h"=>438, "w"=>780, "resize"=>"fit"}, "small"=>{"h"=>382, "w"=>680, "resize"=>"fit"}, "thumb"=>{"h"=>150, "w"=>150, "resize"=>"crop"}, "medium"=>{"h"=>438, "w"=>780, "resize"=>"fit"}}, "id_str"=>"1362793163627384833", "indices"=>[65, 88], "media_url"=>"http://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg", "display_url"=>"pic.twitter.com/owC53ZJuDO", "expanded_url"=>"https://twitter.com/1bertlol/status/1362793165137313792/photo/1", "media_url_https"=>"https://pbs.twimg.com/media/EumdKXRXUAETYvz.jpg"}]}, "possibly_sensitive"=>false, "in_reply_to_user_id"=>nil, "in_reply_to_status_id"=>nil, "in_reply_to_screen_name"=>nil, "in_reply_to_user_id_str"=>nil, "in_reply_to_status_id_str"=>nil, "possibly_sensitive_appealable"=>false}, "service_data_updated_at"=>"2021-02-19T11:00:18.465-05:00"}
 ```
 
-For full documentation, please use the [OnePost RapidAPI Page](https://rapidapi.com/onepost/api/onepost1) as reference. Additionally, the tests included in this gem are a great way to see what is possible using the Gem:
+### Webhooks
+
+You may have noticed while reading over the documentation that several key records are created for you automatically, such as `AuthorizedPage`s. This can be problematic in the event that you go to look for your records and they aren't created yet.
+
+Luckily, OnePost solves this need by providing a Webhook system. This system allows you to specify an HTTP endpoint in your application for OnePost to send `POST` requests to. When key events happen in the OnePost system, the event data will be sent to your endpoint where your application can do the necessary processing without polling for updates.
+
+To test this system, we can get a new test endpoint quickly using [Webhook.site](https://webhook.site/). Navigating to this page will give you a "unique URL" that you can use as your test endpoint. Let's use the Gem to register this endpoint:
+
+```ruby
+client.create_webhook(body:{
+  webhook: {
+    endpoint_url: "https://webhook.site/3f338283-10b0-492a-a97e-d891d538ab79"
+  }
+})
+# => {"id"=>4, "endpoint_url"=>"https://webhook.site/3f338283-10b0-492a-a97e-d891d538ab79", "created_at"=>"2021-02-19T11:45:15.652-05:00", "updated_at"=>"2021-02-19T11:45:15.652-05:00"}
+```
+
+Now that we have our endpoint, let's create a test event to make sure it's working.
+
+```ruby
+client.create_test_event
+# => {"id"=>16, "name"=>"events.test", "data"=>{"object"=>{"ping"=>"pong"}}, "created_at"=>"2021-02-19T11:48:26.546-05:00", "updated_at"=>"2021-02-19T11:48:26.546-05:00", "webhook_attempts"=>[{"id"=>11, "state"=>"new", "created_at"=>"2021-02-19T11:48:26.561-05:00", "updated_at"=>"2021-02-19T11:48:26.561-05:00", "number_of_attempted_requests"=>0, "webhook"=>{"id"=>4, "endpoint_url"=>"https://webhook.site/3f338283-10b0-492a-a97e-d891d538ab79", "created_at"=>"2021-02-19T11:45:15.652-05:00", "updated_at"=>"2021-02-19T11:45:15.652-05:00"}}]}
+```
+
+You should now see your test event appear in Webhook.site.
+
+OnePost will continue to attempt to send the request to notify your application of events using an exponential backoff algorithm in the case we receive a non-200 response.
+
+### Reference
+
+For full documentation, please use the [OnePost RapidAPI Page](https://rapidapi.com/onepost/api/onepost1) as the ultimate source of truth. Additionally, the tests included in this gem are a great way to see what is possible using the Gem:
 
 Resource | Test File
 ------------ | -------------
@@ -153,10 +183,6 @@ Posts | [Post Tests](https://github.com/akdarrah/onepost-gem/blob/master/test/on
 Social Posts | [Social Post Tests](https://github.com/akdarrah/onepost-gem/blob/master/test/onepost_social_post_test.rb)
 Webhooks | [Webhook Tests](https://github.com/akdarrah/onepost-gem/blob/master/test/onepost_webhook_test.rb)
 Events | [Event Tests](https://github.com/akdarrah/onepost-gem/blob/master/test/onepost_event_test.rb)
-
-### Webhooks
-
-
 
 ## Development
 
