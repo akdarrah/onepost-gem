@@ -63,6 +63,43 @@ client.create_provider(body: {
 # => {"id"=>5, "type"=>"Providers::Twitter", "api_key"=>"edw...", "created_at"=>"2021-02-19T10:04:23.692-05:00", "updated_at"=>"2021-02-19T10:04:23.692-05:00", "callback_url"=>nil, "api_secret_key"=>"XVI..."}
 ```
 
+Now that we have created a Provider record, we can use our client to read the data back.
+
+```ruby
+client.get_provider(5)
+# => {"id"=>5, "type"=>"Providers::Twitter", "api_key"=>"edw...", "created_at"=>"2021-02-19T10:04:23.692-05:00", "updated_at"=>"2021-02-19T10:04:23.692-05:00", "callback_url"=>nil, "api_secret_key"=>"XVI..."}
+```
+
+Or you can fetch all providers registered to the API user.
+
+```ruby
+client.get_providers
+# => {"current_page"=>1, "per_page"=>30, "total_entries"=>1, "collection"=>[{"id"=>5, "type"=>"Providers::Twitter", "api_key"=>"edw...", "created_at"=>"2021-02-19T10:04:23.692-05:00", "updated_at"=>"2021-02-19T10:04:23.692-05:00", "callback_url"=>nil, "api_secret_key"=>"XVI..."}]}
+```
+
+As you can see, the OnePost API will paginate results for endpoints that can return many records. You can pass additional parameters to your API call to navigate your results (`per_page` has a maximum value of 100):
+
+```ruby
+client.get_providers(query: {page: 2, per_page: 50})
+=> {"current_page"=>2, "per_page"=>50, "total_entries"=>2, "collection"=>[]}
+```
+
+Now that we have registered our Twitter Developer Application with OnePost by creating a `Provider` record, the next step is for us to authorize a Twitter account by creating an `Authorization` record. This is a step that must be done in the web browser, but you can get instructions by using the `create_authorization` API endpoint.
+
+```ruby
+client.create_authorization(body: {authorization: {provider_id: 5}})
+# => {"instructions"=>["Perform the following steps to complete the authorization process:", "  1. In your web browser, navigate to the provided URL.", "  2. Sign in to Twitter.", "  3. You will be redirected back to the original application."], "url"=>"https://api.getonepost.com/users/auth/twitter?provider_id=5&public_key=pk-7a0..."}
+```
+
+In your web browser, navigate to the `url` value. You will be prompted to log in to your Twitter account to give your Twitter Developer Application access to your Twitter account. Once you log in, you will be redirected back to the OnePost website. The URL to redirect the user after a successful authorization can be customized by the `callback_url` value on the Provider record.
+
+Once you've authorized your Twitter account, the Authorization record is available on the OnePost API. (Note: In addition to finding the `Authorization` record via the API, look for the `X-OnePost-Authorization-Id`, `X-OnePost-Provider-Id`, and `X-OnePost-Public-Key` header values in the request sent to your `callback_url`)
+
+```ruby
+client.get_authorizations
+# => {"current_page"=>1, "per_page"=>30, "total_entries"=>1, "collection"=>[{"id"=>5, "created_at"=>"2021-02-19T10:18:36.384-05:00", "updated_at"=>"2021-02-19T10:18:36.384-05:00", "provider_id"=>5, "type"=>"Authorizations::Twitter", "consumer_key"=>"815...", "consumer_secret"=>"HLh...", "authorized_pages"=>[]}]}
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
