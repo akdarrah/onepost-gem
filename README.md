@@ -93,6 +93,8 @@ client.create_authorization(body: {authorization: {provider_id: 5}})
 
 In your web browser, navigate to the `url` value. You will be prompted to log in to your Twitter account to give your Twitter Developer Application access to your Twitter account. Once you log in, you will be redirected back to the OnePost website. The URL to redirect the user after a successful authorization can be customized by the `callback_url` value on the Provider record.
 
+<img width="1000" alt="twitter-browser" src="https://user-images.githubusercontent.com/69064/108530520-aea1b100-72a3-11eb-94f8-123e9e256e44.png">
+
 Once you've authorized your Twitter account, the Authorization record is available on the OnePost API. (Note: In addition to finding the `Authorization` record via the API, look for the `X-OnePost-Authorization-Id`, `X-OnePost-Provider-Id`, and `X-OnePost-Public-Key` header values in the request sent to your `callback_url`)
 
 ```ruby
