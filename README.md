@@ -124,7 +124,7 @@ client.create_post(body: {
 
 Posts are created in a "draft" state and can be updated until it is published. Notice that a `SocialPost` record is automatically created for the AuthorizedPage you provided. As you alter the `authorized_page_ids`, these `SocialPost` records will be automatically created or destroyed for each page you are posting to.
 
-*Note* Do you need to upload your image? View the test case in [this commit](https://github.com/akdarrah/onepost-gem/commit/3b4ee062d68141404e09843293e16f313a46dc18) as an example of how to do that.
+(*Note:* Do you need to upload your image? View the test case in [this commit](https://github.com/akdarrah/onepost-gem/commit/3b4ee062d68141404e09843293e16f313a46dc18) as an example of how to do that.)
 
 Additionally, you can use the `publish_at` field to specify a time for OnePost to automatically publish the post. Since we didn't schedule this post to be published automatically, let's publish it using the API:
 
