@@ -10,6 +10,7 @@ module Onepost
 
     RAPID_API_HOST = "onepost1.p.rapidapi.com"
     TIMEOUT = 180
+    JSON_CONTENT_TYPE = "application/json"
 
     attr_accessor :rapid_api_key, :secret_key
 
@@ -32,9 +33,9 @@ module Onepost
 
     def default_headers
       {
-        "Content-Type"    => "application/json",
+        "Content-Type"    => JSON_CONTENT_TYPE,
         "x-rapidapi-key"  => rapid_api_key,
-        "x-rapidapi-host" => Onepost::Client::RAPID_API_HOST
+        "x-rapidapi-host" => RAPID_API_HOST
       }
     end
 

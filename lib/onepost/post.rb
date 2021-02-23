@@ -41,9 +41,13 @@ module Onepost
         body    = default_body.merge(options.fetch(:body, {}))
         headers = default_headers.merge(options.fetch(:headers, {}))
 
+        if headers["Content-Type"] == Onepost::Client::JSON_CONTENT_TYPE
+          body = body.to_json
+        end
+
         response = HTTParty.post(url, {
           query: query,
-          body: body.to_json,
+          body: body,
           headers: headers,
           timeout: Onepost::Client::TIMEOUT
         })

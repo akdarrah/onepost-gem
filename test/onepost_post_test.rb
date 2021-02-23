@@ -71,6 +71,38 @@ class OnepostPostTest < Minitest::Test
     assert_equal 1, data["id"]
   end
 
+  def test_can_create_a_new_post_with_image_upload
+    skip "WebMock does not support matching body for multipart/form-data requests yet :("
+
+    stub_request(:post, "https://onepost1.p.rapidapi.com/api/v1/posts?secret_key=67890")
+      .with(
+        body: "post%5Bbody%5D=Red%20Rocks%21&post%5Bauthorized_page_ids%5D%5B%5D=10&post%5Bauthorized_page_ids%5D%5B%5D=11&post%5Bimage%5D=%2FUsers%2Fadam%2FDeveloper%2Fonepost%2Fonepost-gem%2Ftest%2Ffiles%2Fredrocks.jpg",
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'multipart/form-data',
+          'User-Agent'=>'Ruby',
+          'X-Rapidapi-Host'=>'onepost1.p.rapidapi.com',
+          'X-Rapidapi-Key'=>'12345'
+        }
+      )
+      .to_return(status: 200, body: example_post_data.to_json, headers: {})
+
+    data = @client.create_post(
+      headers: {
+        "Content-Type" => "multipart/form-data"
+      },
+      body: {
+        post: {
+          body: "Red Rocks!",
+          authorized_page_ids: [10, 11],
+          image: File.join(Dir.pwd, "test/files/redrocks.jpg")
+        }
+      }
+    )
+    assert_equal 1, data["id"]
+  end
+
   def test_can_update_a_post
     stub_request(:put, "https://onepost1.p.rapidapi.com/api/v1/posts/5?secret_key=67890")
       .with(
