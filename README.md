@@ -8,7 +8,7 @@ Use OnePost to quickly integrate your application with Twitter, Facebook, and In
 2. Then, use OnePost to allow your application's users to log in to each service through their web browser, thereby giving your application permission to post on their behalf.
 3. Finally, post to one (or many) social pages owned by the user with a single API call. Use OnePost to track the performance of each post over time.
 
-Learn more at [https://www.getonepost.com/](https://www.getonepost.com/).
+Learn more at [https://www.getonepost.com/](https://www.getonepost.com/). If you're building a web application using OnePost then check out [OnepostUI](https://github.com/akdarrah/onepost-ui).
 
 ## Installation
 
