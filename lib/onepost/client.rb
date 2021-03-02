@@ -4,6 +4,7 @@ module Onepost
     include Onepost::Authorization
     include Onepost::AuthorizedPage
     include Onepost::Post
+    include Onepost::PostIntent
     include Onepost::SocialPost
     include Onepost::Webhook
     include Onepost::Event
