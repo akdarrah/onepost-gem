@@ -95,7 +95,7 @@ In your web browser, navigate to the `url` value. You will be prompted to log in
 
 <img width="1000" alt="twitter-browser" src="https://user-images.githubusercontent.com/69064/108530520-aea1b100-72a3-11eb-94f8-123e9e256e44.png">
 
-Once you've authorized your Twitter account, the Authorization record is available on the OnePost API. (Note: In addition to finding the `Authorization` record via the API, look for the `X-OnePost-Authorization-Id`, `X-OnePost-Provider-Id`, and `X-OnePost-Public-Key` header values in the request sent to your `callback_url`)
+Once you've authorized your Twitter account, the Authorization record is available on the OnePost API. (Note: In addition to finding the `Authorization` record via the API, look for the `authorization_id`, `provider_Id`, and `public_key` GET parameter values in the request sent to your `callback_url`)
 
 ```ruby
 client.get_authorizations
