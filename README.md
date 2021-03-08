@@ -178,7 +178,7 @@ At the time of writing, OnePost has just a handful of events (check back later f
 
 Name | Description
 ------------ | -------------
-authorized_page.created | Created automatically when a new AuthorizedPage is created (after an Authorization is created)
+authorized_page.authorized | Created automatically when a new AuthorizedPage is "touched" (after a user signs in to the provider to allow access)
 events.test | Created manually by the API user to test Webhook endpoints are configured correctly
 post.published | Created automatically when a Post has successfully posted to all AuthorizedPages (i.e. All SocialPosts have a state of "sent")
 social_post.updated | Created automatically for each SocialPost after a Post has been published. Listen for this event if you want to track performance (such as number of likes, retweets, etc).
