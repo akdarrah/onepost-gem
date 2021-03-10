@@ -11,5 +11,6 @@ require 'onepost/post_intent'
 require 'onepost/social_post'
 require 'onepost/webhook'
 require 'onepost/event'
+require 'onepost/image'
 
 require "onepost/client"

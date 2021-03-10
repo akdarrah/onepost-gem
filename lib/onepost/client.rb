@@ -8,6 +8,7 @@ module Onepost
     include Onepost::SocialPost
     include Onepost::Webhook
     include Onepost::Event
+    include Onepost::Image
 
     RAPID_API_HOST = "onepost1.p.rapidapi.com"
     TIMEOUT = 180
