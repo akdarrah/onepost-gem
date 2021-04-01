@@ -181,6 +181,7 @@ Name | Description
 authorized_page.authorized | Created automatically when a new AuthorizedPage is "touched" (after a user signs in to the provider to allow access)
 events.test | Created manually by the API user to test Webhook endpoints are configured correctly
 post.published | Created automatically when a Post has successfully posted to all AuthorizedPages (i.e. All SocialPosts have a state of "sent")
+social_post.retrying | Created automatically if the SocialPost fails to publish for any reason. Onepost will continue to attempt to publish the SocialPost after a failure. Listen for the `post.published` or `social_post.updated` events to indicate an eventual success.
 social_post.updated | Created automatically for each SocialPost after a Post has been published. Listen for this event if you want to track performance (such as number of likes, retweets, etc).
 
 ### Reference
